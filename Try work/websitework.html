@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hotel Jay Jagannath</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --red:        #C0001E;
+      --red-dark:   #8B0015;
+      --red-light:  #E8002A;
+      --black:      #0D0D0D;
+      --charcoal:   #1A1A1A;
+      --dark-grey:  #2A2A2A;
+      --mid-grey:   #555555;
+      --light-grey: #AAAAAA;
+      --off-white:  #F5F3F0;
+      --white:      #FFFFFF;
+      --whatsapp:   #25D366;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--off-white); color: var(--charcoal); font-family: 'Rajdhani', sans-serif; font-weight: 400; overflow-x: hidden; }
+
+    /* ── NAVBAR ── */
+    .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 200;
+    padding: 1rem 3rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2rem;
+}
+    .navbar.scrolled { background: rgba(13,13,13,0.96); backdrop-filter: blur(12px); padding: 0.7rem 3rem; box-shadow: 0 2px 20px rgba(192,0,30,0.3); }
+    .nav-brand { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+    .nav-logo-img { width: 58px; height: 58px; object-fit: contain; }
+    .nav-text-logo{height: 120px; width:auto; display:block;}
+    .nav-brand-text { display: flex; flex-direction: column; line-height: 1; }
+    .nav-brand-top { font-size: 0.6rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--light-grey); font-weight: 400; }
+    .nav-brand-name { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--white); letter-spacing: 0.05em; }
+    .nav-brand-name span { color: var(--red-light); }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a { color: var(--light-grey); text-decoration: none; font-size: 0.75rem; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 500; transition: color 0.3s; position: relative; }
+    .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--red-light); transition: width 0.3s; }
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover::after { width: 100%; }
+
+    /* ── HERO ── */
+    .hero { position: relative; width: 100%; height: 100vh; overflow: hidden; display: flex; align-items: center; justify-content: center; background: var(--black); }
+    .hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; opacity: 0.5; }
+    .hero-overlay { position: absolute; inset: 0; z-index: 1; background: linear-gradient(to bottom, rgba(13,13,13,0.65) 0%, rgba(13,13,13,0.1) 45%, rgba(13,13,13,0.75) 100%); }
+    .hero-red-line { position: absolute; bottom: 0; left: 0; right: 0; height: 4px; background: linear-gradient(to right, var(--red-dark), var(--red-light), var(--red-dark)); z-index: 3; }
+    .hero-content { position: relative; z-index: 2; text-align: center; padding: 2rem; max-width: 860px; }
+    .hero-logo { width: 105px; height: 105px; object-fit: contain; margin-bottom: 1.5rem; opacity: 0; animation: dropIn 0.8s cubic-bezier(0.34,1.56,0.64,1) forwards 0.3s; filter: drop-shadow(0 0 22px rgba(192,0,30,0.55)); }
+    .hero-hotel-tag { font-size: 0.7rem; letter-spacing: 0.5em; text-transform: uppercase; color: var(--red-light); font-weight: 600; opacity: 0; animation: fadeUp 0.8s ease forwards 0.9s; margin-bottom: 0.8rem; }
+    .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(2.8rem, 8vw, 6.5rem); font-weight: 900; line-height: 1; color: var(--white); opacity: 0; animation: fadeUp 1s ease forwards 1.2s; margin-bottom: 0.3rem; }
+    .hero-title .red-word { color: var(--red-light); }
+    .hero-title-sub { font-family: 'Playfair Display', serif; font-size: clamp(1.5rem, 3.5vw, 3rem); font-weight: 400; font-style: italic; color: var(--light-grey); opacity: 0; animation: fadeUp 1s ease forwards 1.5s; margin-bottom: 2rem; }
+    .hero-divider { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 1.8rem; opacity: 0; animation: fadeIn 1s ease forwards 1.9s; }
+    .hero-divider-line { width: 60px; height: 1px; background: var(--red); }
+    .hero-divider-dot { width: 6px; height: 6px; background: var(--red-light); transform: rotate(45deg); }
+    .hero-tagline { font-size: 0.85rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--light-grey); font-weight: 400; opacity: 0; animation: fadeUp 0.8s ease forwards 2s; margin-bottom: 2.5rem; }
+    .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.8s ease forwards 2.3s; }
+    .btn-primary { display: inline-block; padding: 0.9rem 2.5rem; background: var(--red); color: var(--white); text-decoration: none; font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase; font-weight: 600; border: 2px solid var(--red); transition: background 0.3s, transform 0.2s; }
+    .btn-primary:hover { background: var(--red-dark); transform: translateY(-2px); }
+    .scroll-indicator { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); z-index: 3; display: flex; flex-direction: column; align-items: center; gap: 6px; opacity: 0; animation: fadeIn 1s ease forwards 3s; }
+    .scroll-indicator span { font-size: 0.55rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--light-grey); }
+    .scroll-bar { width: 1px; height: 45px; background: linear-gradient(to bottom, var(--red-light), transparent); animation: scrollPulse 2s ease infinite; }
+     .hero-brand-logo {
+  width: clamp(320px, 80vw, 780px);
+  height: auto;
+  object-fit: contain;
+  opacity: 0;
+  animation: fadeUp 1s ease forwards 1.2s;
+  filter: drop-shadow(0 4px 24px rgba(0,0,0,0.55));
+  margin-bottom: 0.5rem;
+  position: relative;
+  top: 100px;
+   }
+@media (max-width: 768px) {
+  .hero-brand-logo {
+    width: clamp(260px, 88vw, 420px);
+  }
+}
+    /* ── BRAND STRIP ── */
+    .brand-strip { background: var(--red); padding: 2rem 4rem; display: flex; align-items: center; justify-content: center; gap: 2rem; }
+    .strip-logo { width: 54px; height: 54px; object-fit: contain; filter: brightness(0) invert(1); }
+    .strip-divider { width: 1px; height: 40px; background: rgba(255,255,255,0.35); }
+    .strip-text { color: var(--white); text-align: center; }
+    .strip-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; letter-spacing: 0.05em; }
+    .strip-subtitle { font-size: 0.65rem; letter-spacing: 0.35em; text-transform: uppercase; opacity: 0.75; margin-top: 2px; }
+
+    /* ── SHARED ── */
+    .section-label { font-size: 0.65rem; letter-spacing: 0.45em; text-transform: uppercase; color: var(--red); font-weight: 600; margin-bottom: 0.8rem; }
+    .section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.9rem, 3.5vw, 3rem); font-weight: 700; line-height: 1.2; color: var(--black); margin-bottom: 1.2rem; }
+    .section-title em { font-style: italic; color: var(--red); }
+    .section-body { font-size: 1rem; line-height: 1.8; color: var(--mid-grey); font-weight: 400; }
+    .red-rule { width: 50px; height: 3px; background: var(--red); margin: 1.2rem 0; }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.85s ease, transform 0.85s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.15s; }
+    .reveal-delay-2 { transition-delay: 0.3s; }
+    .reveal-delay-3 { transition-delay: 0.45s; }
+
+    /* ── ABOUT ── */
+    .about-section { background: var(--white); }
+    .about-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; padding: 8rem 4rem; }
+    .about-image-wrap { position: relative; }
+    .about-image-wrap img { width: 100%; height: 500px; object-fit: cover; display: block; position: relative; z-index: 1; }
+    .about-image-wrap::before { content: ''; position: absolute; top: -16px; left: -16px; right: 16px; bottom: 16px; border: 3px solid var(--red); z-index: 0; }
+    .about-badge { position: absolute; bottom: -20px; right: -20px; width: 110px; height: 110px; background: var(--red); z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; }
+    .about-badge-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; line-height: 1; }
+    .about-badge-text { font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; text-align: center; line-height: 1.3; }
+
+    /* ── SINGLE ROOM SHOWCASE ── */
+    .rooms-section { background: var(--off-white); padding: 7rem 2rem; }
+    .rooms-header { text-align: center; max-width: 640px; margin: 0 auto 4rem; }
+    .single-room-wrap { display: grid; grid-template-columns: 1fr 1.2fr; background: var(--charcoal); max-width: 1200px; margin: 0 auto; box-shadow: 0 10px 40px rgba(0,0,0,0.15); }
+    .sr-image { position: relative; overflow: hidden; background: var(--charcoal); display: flex; align-items: center; justify-content: center; }
+    .sr-image img { width: 100%; height: auto; max-height: 100%; object-fit: contain; display: block; }
+    .sr-content { padding: 4rem 3rem; color: var(--white); display: flex; flex-direction: column; justify-content: center; }
+    .sr-title { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .sr-price { color: var(--red-light); font-size: 1.2rem; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 2.5rem; }
+    .sr-perks-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem 1.5rem; }
+    .perk-category h4 { color: var(--red); font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem; font-weight: 700; }
+    .perk-category ul { list-style: none; }
+    .perk-category ul li { font-size: 0.95rem; color: var(--light-grey); margin-bottom: 0.6rem; display: flex; align-items: center; gap: 0.6rem; }
+    .perk-category ul li::before { content: '✓'; color: var(--red-light); font-weight: bold; font-size: 1.1rem; }
+    .sr-cta { margin-top: 3rem; display: inline-block; }
+
+    /* ── GALLERY ── */
+    .gallery-section { background: var(--charcoal); padding: 7rem 2rem; }
+    .gallery-header { text-align: center; max-width: 600px; margin: 0 auto 4rem; }
+    .gallery-section .section-title { color: var(--white); }
+    .gallery-section .section-body { color: var(--light-grey); }
+    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 1.5rem; max-width: 1200px; margin: 0 auto; }
+    .gallery-card { background: var(--dark-grey); cursor: pointer; overflow: hidden; border-bottom: 3px solid transparent; transition: border-color 0.3s, box-shadow 0.3s; }
+    .gallery-card:hover { border-bottom-color: var(--red); box-shadow: 0 8px 30px rgba(192,0,30,0.2); }
+    .gallery-card.open { border-bottom-color: var(--red-light); }
+    .gallery-card img { width: 100%; height: 240px; object-fit: cover; display: block; transition: transform 0.5s ease, opacity 0.3s; }
+    .gallery-card:hover img { transform: scale(1.04); opacity: 0.9; }
+    .gallery-card-body { padding: 1.3rem 1.6rem 1.5rem; }
+    .gallery-card-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: var(--white); display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .toggle-icon { width: 26px; height: 26px; border: 1px solid var(--mid-grey); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1.1rem; color: var(--light-grey); line-height: 1; transition: background 0.3s, border-color 0.3s, transform 0.35s, color 0.3s; }
+    .gallery-card.open .toggle-icon { background: var(--red); border-color: var(--red); color: white; transform: rotate(45deg); }
+    .gallery-card-text { max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.5s ease, opacity 0.45s ease, padding 0.3s; font-size: 0.9rem; line-height: 1.75; color: var(--light-grey); padding-top: 0; }
+    .gallery-card.open .gallery-card-text { max-height: 280px; opacity: 1; padding-top: 0.9rem; }
+
+    /* ── REVIEWS ── */
+    .reviews-section { background: var(--white); padding: 7rem 2rem; }
+    .reviews-header { text-align: center; max-width: 600px; margin: 0 auto 4rem; }
+    .review-card {background:var(--off-white);padding:3rem 4rem;border-left:3px solid var(--red);position:relative;min-height:320px;display:flex;flex-direction:column;justify-content:space-between;max-width:1200px;margin:0 auto;}
+    .review-stars { color: var(--red); font-size: 1rem; letter-spacing: 0.1em; margin-bottom: 0.8rem; }
+    .review-text { font-size: 0.95rem; line-height: 1.8; color: var(--mid-grey); font-style: italic; margin-bottom: 1.2rem; }
+    .review-author { display: flex; align-items: center; gap: 0.75rem; }
+    .review-avatar { width: 38px; height: 38px; background: var(--red); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-weight: 700; color: white; font-size: 1rem; flex-shrink: 0; }
+    .review-name { font-weight: 600; font-size: 0.9rem; color: var(--charcoal); }
+    .review-date { font-size: 0.72rem; color: var(--light-grey); }
+    .review-source { position: absolute; top: 1.2rem; right: 1.5rem; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--light-grey); }
+    .reviews-cta { text-align: center; margin-top: 2.5rem; }
+    .reviews-cta p { font-size: 0.95rem; color: var(--mid-grey); margin-bottom: 1.2rem; }
+    .review-btn { display: inline-flex; align-items: center; gap: 0.75rem; background: var(--red); color: white; text-decoration: none; padding: 1rem 2.5rem; font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; font-family: 'Rajdhani', sans-serif; transition: background 0.3s, transform 0.2s; }
+    .review-btn:hover { background: var(--red-dark); transform: translateY(-2px); }
+    .google-badge { display: inline-flex; align-items: center; gap: 0.6rem; background: var(--off-white); border: 1px solid #ddd; padding: 0.6rem 1.2rem; margin-bottom: 1.5rem; font-size: 0.85rem; color: var(--charcoal); }
+    .google-g { font-weight: 700; font-size: 1.1rem; }
+    .google-g span:nth-child(1) { color: #4285F4; }
+    .google-g span:nth-child(2) { color: #EA4335; }
+    .google-g span:nth-child(3) { color: #FBBC04; }
+    .google-g span:nth-child(4) { color: #4285F4; }
+    .google-g span:nth-child(5) { color: #34A853; }
+    .google-g span:nth-child(6) { color: #EA4335; }
+
+    /* ── REVIEWS CAROUSEL ── */
+    .rc-track-outer {overflow:hidden;position:relative;width:100%;max-width:1400px;margin:0 auto;padding:0 1rem;}
+    .rc-track { display: flex; transition: transform 0.55s cubic-bezier(0.4,0,0.2,1); }
+    .rc-card { min-width: 100%; margin-right: 0; flex-shrink: 0; box-sizing: border-box; }
+    .rc-dots { display: flex; justify-content: center; gap: 7px; margin-top: 1.8rem; }
+    .rc-dot { width: 7px; height: 7px; background: var(--light-grey); border: none; border-radius: 50%; cursor: pointer; padding: 0; transition: background 0.3s, transform 0.2s; }
+    .rc-dot.active { background: var(--red); transform: scale(1.3); }
+    .rc-nav { display: flex; justify-content: center; gap: 10px; margin-top: 1rem; }
+    .rc-btn { background: transparent; border: 1.5px solid var(--red); color: var(--red); width: 36px; height: 36px; cursor: pointer; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; transition: background 0.25s, color 0.25s; font-family: 'Rajdhani', sans-serif; }
+    .rc-btn:hover { background: var(--red); color: white; }
+    
+
+    /* ── CONTACT & LAYOUT ── */
+    .contact-section { background: var(--black); padding: 8rem 4rem; }
+    .contact-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+    .contact-section .section-title { color: var(--white); }
+    .contact-section .section-body { color: var(--light-grey); max-width: 460px; }
+    .contact-details { margin-top: 2rem; display: flex; flex-direction: column; gap: 1.6rem; }
+    .contact-item { display: flex; align-items: flex-start; gap: 1rem; }
+    .contact-icon { width: 40px; height: 40px; background: var(--dark-grey); border-left: 3px solid var(--red); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1rem; color: white; }
+    .contact-item-label { font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--red-light); display: block; margin-bottom: 0.2rem; font-weight: 600; }
+    .contact-item-text { font-size: 0.9rem; line-height: 1.7; color: var(--light-grey); }
+    .cta-buttons { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
+    .whatsapp-btn { display: inline-flex; justify-content: center; align-items: center; gap: 0.85rem; background: var(--whatsapp); color: white; text-decoration: none; padding: 1.1rem 2rem; font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; transition: opacity 0.3s, transform 0.2s; font-family: 'Rajdhani', sans-serif; }
+    .whatsapp-btn:hover { opacity: 0.92; transform: translateY(-2px); }
+    .whatsapp-icon { width: 20px; height: 20px; flex-shrink: 0; }
+    .email-btn { display: inline-flex; justify-content: center; align-items: center; gap: 0.85rem; background: transparent; border: 2px solid var(--light-grey); color: white; text-decoration: none; padding: 1.1rem 2rem; font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; transition: background 0.3s, color 0.3s, transform 0.2s; font-family: 'Rajdhani', sans-serif; }
+    .email-btn:hover { background: var(--light-grey); color: var(--black); transform: translateY(-2px); }
+    .call-action-box { background: var(--dark-grey); padding: 1.8rem; margin-top: 1.5rem; border-left: 3px solid var(--red); display: flex; flex-direction: column; gap: 1.2rem; }
+    .call-action-top { display: flex; align-items: center; gap: 1.2rem; }
+    .call-icon-pulse { width: 45px; height: 45px; background: var(--red); border-radius: 50%; display: flex; align-items: center; justify-content: center; animation: phonePulse 2s infinite; flex-shrink: 0; }
+    .call-icon-pulse svg { width: 22px; height: 22px; color: white; }
+    .dial-btn-large { display: flex; justify-content: center; align-items: center; background: var(--red); color: white; text-decoration: none; padding: 1.1rem; font-size: 1rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; transition: background 0.3s, transform 0.2s; }
+    .dial-btn-large:hover { background: var(--red-dark); transform: translateY(-2px); }
+    .map-column { display: flex; flex-direction: column; gap: 1rem; width: 100%; }
+    .map-embed { width: 100%; height: 360px; border: none; display: block; border: 2px solid var(--dark-grey); }
+    .maps-btn { display: flex; justify-content: center; align-items: center; gap: 0.85rem; background: transparent; color: var(--white); text-decoration: none; padding: 1.1rem 2rem; font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; border: 2px solid var(--red); transition: background 0.3s, color 0.3s; font-family: 'Rajdhani', sans-serif; }
+    .maps-btn:hover { background: var(--red); }
+
+    /* ── FOOTER ── */
+    footer { background: var(--charcoal); border-top: 3px solid var(--red); padding: 2.5rem 4rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .footer-brand { display: flex; align-items: center; gap: 0.75rem; }
+    .footer-logo {
+  width: clamp(160px, 20vw, 240px);
+  height: auto;
+  object-fit: contain;
+  opacity: 0.92;
+  filter: drop-shadow(0 2px 10px rgba(192,0,30,0.25)) brightness(1.05);
+  transition: opacity 0.3s, filter 0.3s;
+}
+.footer-logo:hover {
+  opacity: 1;
+  filter: drop-shadow(0 2px 16px rgba(192,0,30,0.5)) brightness(1.1);
+}
+    .footer-name { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--white); font-weight: 700; }
+    .footer-name span { color: var(--red-light); }
+    .footer-copy { font-size: 0.7rem; letter-spacing: 0.15em; color: var(--mid-grey); text-transform: uppercase; }
+
+    /* ── KEYFRAMES ── */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes dropIn { from { opacity: 0; transform: translateY(-30px) scale(0.8); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    @keyframes scrollPulse { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
+    @keyframes phonePulse { 0% { box-shadow: 0 0 0 0 rgba(192,0,30,0.7); } 70% { box-shadow: 0 0 0 12px rgba(192,0,30,0); } 100% { box-shadow: 0 0 0 0 rgba(192,0,30,0); } }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .about-inner, .contact-inner { grid-template-columns: 1fr; padding: 5rem 2rem; gap: 3.5rem; }
+      .single-room-wrap { grid-template-columns: 1fr; }
+      .sr-image img { min-height: 300px; }
+      .sr-perks-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+      .navbar { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .gallery-section, .rooms-section, .reviews-section, .contact-section { padding: 5rem 1.5rem; }
+      footer { flex-direction: column; text-align: center; padding: 2rem; }
+      .brand-strip { padding: 1.8rem 2rem; gap: 1.2rem; }
+    }
+  
+.hero-video{object-position:center center;}
+
+@media (max-width:768px){
+  .hero{
+    height:85vh;
+    min-height:650px;
+  }
+
+  .hero-content{padding:1rem;max-width:95%;}
+  .hero-logo{width:80px;height:80px;}
+  .hero-hotel-tag{font-size:.6rem;letter-spacing:.25em;}
+  .hero-title{font-size:3rem;}
+  .hero-title-sub{font-size:1.3rem;}
+  .hero-tagline{font-size:.7rem;letter-spacing:.12em;}
+
+  .brand-strip{
+    flex-direction:column;
+    text-align:center;
+    padding:1.5rem 1rem;
+  }
+
+  .strip-divider{
+    width:60px;
+    height:1px;
+  }
+
+  .review-card{
+    width:100%;
+    min-height:auto;
+    padding:1.5rem;
+    border-left-width:2px;
+  }
+
+  .review-source{
+    position:static;
+    display:block;
+    text-align:right;
+    margin-bottom:1rem;
+  }
+
+  .review-text{
+    font-size:.9rem;
+    line-height:1.7;
+  }
+
+  .rc-track-outer{
+    width:100%;
+    overflow:hidden;
+  }
+
+  .rc-card{
+    min-width:100% !important;
+  }
+
+  .review-btn{
+    width:100%;
+    justify-content:center;
+  }
+
+  .whatsapp-btn,.email-btn,.maps-btn{
+    width:100%;
+  }
+
+  .map-embed{
+    height:280px;
+  }
+}
+
+</style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <a href="#" class="nav-brand">
+      <img src="Logohero.png" alt="Hotel Jay Jagannath Logo" class="nav-logo-img" onerror="this.style.display='none'"/>
+    </a>
+    <img src="Logo White L-Picsart-BackgroundRemover.png"
+         alt="Hotel Jay Jagannath"
+         class="nav-text-logo">
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#rooms">Room Details</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#reviews">Reviews</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <video class="hero-video" autoplay muted loop playsinline>
+      <source src="HJJvideo.mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-red-line"></div>
+    <div class="hero-content">
+      <img src="" alt="JJ Logo" class="hero-logo" onerror="this.style.display='none'"/>
+      <p class="hero-hotel-tag"></p>
+      <img src="Logo White L-Picsart-BackgroundRemover.png" alt="Hotel Jay Jagannath" class="hero-brand-logo"/>
+      <p class="hero-title-sub">Towns most connected stay</p>
+      <div class="hero-divider">
+        <div class="hero-divider-line"></div>
+        <div class="hero-divider-dot"></div>
+        <div class="hero-divider-line"></div>
+      </div>
+      <p class="hero-tagline">Safe&nbsp;·&nbsp; Central&nbsp;·&nbsp; Comfertable</p>
+      <div class="hero-btns">
+        <a href="#rooms" class="btn-primary">View Room Details</a>
+        <a href="#contact" class="btn-primary" style="background:transparent;border-color:rgba(255,255,255,0.4);">Contact Us</a>
+      </div>
+    </div>
+    <div class="scroll-indicator">
+      <span></span>
+      <div class="scroll-bar"></div>
+    </div>
+  </section>
+
+  <!-- BRAND STRIP -->
+  <div class="brand-strip">
+    <img src="logo1.jpg.jpeg" alt="JJ" class="strip-logo" onerror="this.style.display='none'"/>
+    <div class="strip-divider"></div>
+    <div class="strip-text">
+      <div class="strip-title">Hotel Jay Jagannath</div>
+      <div class="strip-subtitle">Comfort &nbsp;·&nbsp; Cuisine &nbsp;·&nbsp; Culture</div>
+    </div>
+    <div class="strip-divider"></div>
+    <img src="logo.png" alt="JJ" class="strip-logo" onerror="this.style.display='none'"/>
+  </div>
+
+  <!-- ABOUT SECTION -->
+  <section id="about" class="about-section">
+    <div class="about-inner">
+      <div class="about-image-wrap reveal">
+        <img src="outside3.jpg" alt="Hotel Jay Jagannath" onerror="this.style.background='#2A2A2A';this.removeAttribute('src')"/>
+        <div class="about-badge">
+          <div class="about-badge-num">15+</div>
+          <div class="about-badge-text">Years of<br>Service</div>
+        </div>
+      </div>
+      <div>
+        <p class="section-label reveal">About Us</p>
+        <h2 class="section-title reveal reveal-delay-1">A Legacy of<br><em>Warm Hospitality</em></h2>
+        <div class="red-rule reveal reveal-delay-1"></div>
+        <p class="section-body reveal reveal-delay-2">
+          Hotel Jay Jagannath has been a trusted name in hospitality for over a decade.
+          We pride ourselves on delivering genuine comfort, hearty meals, and a welcoming
+          environment that feels like home — rooted in the spirit of Lord Jagannath's
+          boundless grace and generosity.
+        </p>
+        <p class="section-body reveal reveal-delay-3" style="margin-top:1rem;">
+          Whether you are checking in for the night, or celebrating
+          a special occasion, our team is devoted to making every moment count.
+          Come as a guest, leave as family.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SINGLE ROOM SHOWCASE SECTION -->
+  <section id="rooms" class="rooms-section">
+    <div class="rooms-header">
+      <p class="section-label reveal">Accommodation</p>
+      <h2 class="section-title reveal reveal-delay-1">Our <em>Featured Room</em></h2>
+      <p class="section-body reveal reveal-delay-2" style="text-align:center;margin:0 auto;">
+        Experience ultimate comfort tailored for your relaxation. Discover what makes staying with us special.
+      </p>
+    </div>
+
+    <div class="single-room-wrap reveal reveal-delay-1">
+      <div class="sr-image">
+        <img src="roomimage2.jpg" alt="Featured Room" onerror="this.style.background='#3A3A3A';this.removeAttribute('src')"/>
+      </div>
+      <div class="sr-content">
+        <h3 class="sr-title">Executive Room</h3>
+        <div class="sr-price"></div>
+        <div class="sr-perks-grid">
+          <div class="perk-category">
+            <h4>Room Amenities</h4>
+            <ul>
+              <li>Plush Single/Double Bed</li>
+              <li>Air Conditioning (AC)</li>
+              <li>LED Television</li>
+              <li>Spacious Wardrobe</li>
+            </ul>
+          </div>
+          <div class="perk-category">
+            <h4>Washroom Facilities</h4>
+            <ul>
+              <li>Attached Bathroom</li>
+              <li>24/7 Hot &amp; Cold Water</li>
+              <li>Fresh Towels</li>
+              <li>Complimentary Toiletries</li>
+            </ul>
+          </div>
+          <div class="perk-category">
+            <h4>Network &amp; Wi-Fi</h4>
+            <ul>
+              <li>Free High-Speed Wi-Fi</li>
+              <li>Strong Mobile Network</li>
+              <li>Dedicated Working Desk</li>
+              <li>Multiple Charging Ports</li>
+            </ul>
+          </div>
+          <div class="perk-category">
+            <h4>Exclusive Perks</h4>
+            <ul>
+              <li>Daily Housekeeping</li>
+              <li>24-Hour Room Service</li>
+              <li>Compound Parking Availability</li>
+            </ul>
+          </div>
+        </div>
+        <div class="sr-cta">
+          <a href="#contact" class="btn-primary">Book This Room</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery" class="gallery-section">
+    <div class="gallery-header">
+      <p class="section-label reveal">Our Property</p>
+      <h2 class="section-title reveal reveal-delay-1">A Look <em>Inside</em></h2>
+      <p class="section-body reveal reveal-delay-2" style="text-align:center;margin:0 auto;">
+        Click any card to read more about each space.
+      </p>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-card reveal" onclick="toggleCard(this)">
+        <img src="room1.jpg" alt="Restaurant" onerror="this.style.background='#3A3A3A';this.style.height='240px';this.removeAttribute('src')"/>
+        <div class="gallery-card-body">
+          <div class="gallery-card-title">The Room <span class="toggle-icon">+</span></div>
+          <div class="gallery-card-text">
+            Our well-appointed 240 sq. ft. rooms are thoughtfully designed for comfort and convenience.
+            Each room features an attached private bathroom and modern amenities including air conditioning, complimentary high-speed Wi-Fi, comfortable bedding, a flat-screen television, wardrobe space, and essential toiletries.
+            Whether you're travelling for business or leisure, our rooms provide everything needed for a relaxing stay.
+          </div>
+        </div>
+      </div>
+      <div class="gallery-card reveal reveal-delay-1" onclick="toggleCard(this)">
+        <img src="reception1.jpg" alt="Lobby" onerror="this.style.background='#444';this.style.height='240px';this.removeAttribute('src')"/>
+        <div class="gallery-card-body">
+          <div class="gallery-card-title">The Reception <span class="toggle-icon">+</span></div>
+          <div class="gallery-card-text">
+            Enjoy seamless hospitality with our 24/7 reception service.
+            Our friendly and professional staff are always available to assist with check-ins, check-outs, travel guidance, local recommendations, and any guest requirements.
+            We are committed to ensuring a smooth and comfortable stay at any hour of the day or night.
+          </div>
+        </div>
+      </div>
+      <div class="gallery-card reveal reveal-delay-2" onclick="toggleCard(this)">
+        <img src="corridor2.jpg" alt="Dining" onerror="this.style.background='#383838';this.style.height='240px';this.removeAttribute('src')"/>
+        <div class="gallery-card-body">
+          <div class="gallery-card-title">The Lobby <span class="toggle-icon">+</span></div>
+          <div class="gallery-card-text">
+            Our spacious and hygienic lobby offers a warm and welcoming atmosphere for every guest.
+            Designed with comfort and cleanliness in mind, it provides the perfect space to relax, meet friends, or unwind after a long day.
+            With well-maintained surroundings and comfortable seating, every visit begins with a pleasant experience.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section id="reviews" class="reviews-section">
+    <div class="reviews-header">
+      <p class="section-label reveal">Guest Experiences</p>
+      <h2 class="section-title reveal reveal-delay-1">What Our <em>Guests Say</em></h2>
+      <div class="google-badge reveal reveal-delay-2">
+        <span class="google-g"><span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span></span>
+        Reviews &nbsp; ★★★★★
+      </div>
+    </div>
+
+    <!-- ROTATING CAROUSEL -->
+    <div class="rc-track-outer reveal">
+      <div class="rc-track" id="rcTrack"></div>
+    </div>
+    <div class="rc-dots" id="rcDots"></div>
+    <div class="rc-nav">
+      <button class="rc-btn" id="rcPrev" aria-label="Previous reviews">&#8592;</button>
+      <button class="rc-btn" id="rcNext" aria-label="Next reviews">&#8594;</button>
+    </div>
+
+    <div class="reviews-cta reveal">
+      <p>Had a great stay? Share your experience on Google — it helps other travellers find us.</p>
+      <a class="review-btn" href="https://www.google.com/maps/place/Hotel+Jay+Jagannath/@21.3436845,83.6251017,17z/data=!4m11!3m10!1s0x3a214a85443fd3ad:0x22ff86e30e30d1c!5m2!4m1!1i2!8m2!3d21.3436845!4d83.6251017!9m1!1b1!16s%2Fg%2F11fyxd_hkw?entry=ttu&g_ep=EgoyMDI2MDUwMi4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer">
+        ★ &nbsp; Leave a Review on Google
+      </a>
+    </div>
+  </section>
+
+  <!-- CONTACT SECTION -->
+  <section id="contact" class="contact-section">
+    <div class="contact-inner">
+      <div>
+        <p class="section-label reveal">Get in Touch</p>
+        <h2 class="section-title reveal reveal-delay-1">Reserve a Room or<br><em>Send an Enquiry</em></h2>
+        <div class="red-rule reveal reveal-delay-1"></div>
+        <p class="section-body reveal reveal-delay-2">
+          We are available 24 hours for bookings and enquiries.
+          Message us directly on WhatsApp, send us an email, or call our front desk for instant assistance.
+        </p>
+        <div class="contact-details">
+          <div class="contact-item reveal">
+            <div class="contact-icon">📍</div>
+            <div class="contact-item-text">
+              <span class="contact-item-label">Address</span>
+              Hotel Jay Jagannath<br>
+              [Ward No 9, Gandhi Chowk]<br>
+              [Bargarh, Odisha 768028]
+            </div>
+          </div>
+          <div class="contact-item reveal reveal-delay-1">
+            <div class="contact-icon">✉️</div>
+            <div class="contact-item-text">
+              <span class="contact-item-label">Email Us</span>
+              <a href="mailto:hoteljayjagannath@gmail.com" style="color: var(--light-grey); text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='var(--white)'" onmouseout="this.style.color='var(--light-grey)'">
+                hoteljayjagannath@gmail.com
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="cta-buttons reveal reveal-delay-2">
+          <a class="whatsapp-btn" href="https://wa.me/919439878787?text=Hello%20Hotel%20Jay%20Jagannath%2C%20I%20would%20like%20to%20make%20a%20reservation." target="_blank" rel="noopener noreferrer">
+            <svg class="whatsapp-icon" viewBox="0 0 24 24" fill="white">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            Chat on WhatsApp
+          </a>
+          <a class="email-btn" href="mailto:hoteljayjagannath@gmail.com">
+            <svg class="whatsapp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            Send an Email
+          </a>
+        </div>
+        <div class="call-action-box reveal reveal-delay-3">
+          <div class="call-action-top">
+            <div class="call-icon-pulse">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+            </div>
+            <div>
+              <h4 style="color:white; font-family:'Playfair Display', serif; font-size:1.4rem; margin-bottom:0.2rem;">Direct Call</h4>
+              <p style="color:var(--light-grey); font-size:0.9rem;">Skip the typing. Speak to our front desk.</p>
+            </div>
+          </div>
+          <a href="tel:+919439878787" class="dial-btn-large">
+            Dial +91 94398 78787
+          </a>
+        </div>
+      </div>
+
+      <!-- Right Column: Map -->
+      <div class="map-column reveal reveal-delay-2">
+        <iframe
+          class="map-embed"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3716.1726415797243!2d83.6251017!3d21.343684500000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a214a85443fd3ad%3A0x22ff86e30e30d1c!2sHotel%20Jay%20Jagannath!5e0!3m2!1sen!2sin!4v1778240199347!5m2!1sen!2sin"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Hotel Jay Jagannath Location">
+        </iframe>
+        <a class="maps-btn" href="https://share.google/H8rPB0nic70IQAJGO" target="_blank" rel="noopener noreferrer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+            <circle cx="12" cy="9" r="2.5" fill="currentColor" stroke="none"/>
+          </svg>
+          Get Directions on Google Maps
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">
+        <img src="Logo White L-Picsart-BackgroundRemover.png" alt="Hotel Jay Jagannath" class="footer-logo"/>
+    </div>
+    <span class="footer-copy">© 2025 Hotel Jay Jagannath · All Rights Reserved</span>
+  </footer>
+
+  <script>
+    /* Navbar darkens on scroll */
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    /* Scroll-reveal */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    /* Gallery expand/collapse */
+    function toggleCard(card) {
+      card.classList.toggle('open');
+    }
+
+    /* ── REVIEWS CAROUSEL ── */
+    const reviewsData = [
+      { stars: 5, text: "Excellent stay! The rooms were clean and comfortable, staff was very helpful and friendly. The food in the restaurant was absolutely delicious. Will definitely come back.", name: "Rahul Sharma", date: "March 2025", avatar: "R" },
+      { stars: 5, text: "Very good hotel for the price. Location is convenient and the food is home-style and very tasty. The manager was kind and accommodating. Highly recommended!", name: "Priya Das", date: "January 2025", avatar: "P" },
+      { stars: 4, text: "Good value for money. Stayed here during my pilgrimage trip. Clean rooms, good food and polite staff. The ambience gives a very devotional and welcoming feel.", name: "Suresh Patel", date: "December 2024", avatar: "S" },
+      { stars: 5, text: "Wonderful hospitality! The staff treated us like family. Very clean property and the restaurant food is top notch. Perfect location near the temple.", name: "Anita Mishra", date: "February 2025", avatar: "A" },
+      { stars: 5, text: "One of the best budget stays in the area. Rooms are spacious and well-maintained. Hot water available round the clock. Would definitely recommend to friends.", name: "Deepak Nayak", date: "November 2024", avatar: "D" },
+      { stars: 4, text: "Stayed for 3 nights and had a pleasant experience. The food was delicious and reasonably priced. Staff were polite and responsive to all our needs.", name: "Kavita Sahu", date: "October 2024", avatar: "K" },
+      { stars: 5, text: "Amazing experience! The Wi-Fi was fast, rooms were spotless, and checkout was smooth. Great place for both business and leisure travellers.", name: "Manish Tiwari", date: "January 2025", avatar: "M" },
+      { stars: 5, text: "The hotel exceeded our expectations. Very clean, comfortable beds, and the in-house restaurant is a gem. Staff went out of their way to make us feel at home.", name: "Sunita Rao", date: "March 2025", avatar: "S" },
+      { stars: 4, text: "Good rooms, nice food, and a convenient location. We enjoyed our short stay here and will return on our next visit to Bargarh.", name: "Vikram Joshi", date: "December 2024", avatar: "V" },
+      { stars: 5, text: "Highly recommend Hotel Jay Jagannath! From check-in to check-out, everything was smooth and pleasant. The whole team is warm and welcoming.", name: "Rekha Devi", date: "February 2025", avatar: "R" }
+    ];
+
+    const rcTrack = document.getElementById('rcTrack');
+    const rcDots  = document.getElementById('rcDots');
+    let rcCurrent = 1;
+    let rcTimer;
+    const VISIBLE = 1;
+    const steps = reviewsData.length;
+
+    function createReviewCard(r){
+      var card = document.createElement('div');
+      card.className = 'rc-card review-card';
+      card.innerHTML =
+        '<div class="review-source">Google Review</div>' +
+        '<div class="review-stars">' + '★'.repeat(r.stars) + '☆'.repeat(5 - r.stars) + '</div>' +
+        '<p class="review-text">"' + r.text + '"</p>' +
+        '<div class="review-author">' +
+          '<div class="review-avatar">' + r.avatar + '</div>' +
+          '<div>' +
+            '<div class="review-name">' + r.name + '</div>' +
+            '<div class="review-date">' + r.date + '</div>' +
+          '</div>' +
+        '</div>';
+      return card;
+    }
+
+    rcTrack.appendChild(createReviewCard(reviewsData[reviewsData.length - 1]));
+    reviewsData.forEach(r => rcTrack.appendChild(createReviewCard(r)));
+    rcTrack.appendChild(createReviewCard(reviewsData[0]));
+
+    for (var i = 0; i < steps; i++) {
+      (function(idx) {
+        var dot = document.createElement('button');
+        dot.className = 'rc-dot' + (idx === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', 'Go to review ' + (idx + 1));
+        dot.addEventListener('click', function() { rcGoTo(idx + 1); rcResetAuto(); });
+        rcDots.appendChild(dot);
+      })(i);
+    }
+
+    function rcGoTo(idx) {
+      rcCurrent = idx;
+      var cardW = rcTrack.children[0].offsetWidth;
+
+      rcTrack.style.transition = 'transform 0.55s cubic-bezier(0.4,0,0.2,1)';
+      rcTrack.style.transform = 'translateX(-' + (rcCurrent * cardW) + 'px)';
+
+      let realIndex = rcCurrent - 1;
+      if (realIndex < 0) realIndex = reviewsData.length - 1;
+      if (realIndex >= reviewsData.length) realIndex = 0;
+
+      document.querySelectorAll('.rc-dot').forEach(function(d, i) {
+        d.classList.toggle('active', i === realIndex);
+      });
+    }
+
+    rcTrack.addEventListener('transitionend', () => {
+
+      const cardW = rcTrack.children[0].offsetWidth;
+
+      if (rcCurrent === reviewsData.length + 1) {
+
+        rcTrack.style.transition = 'none';
+        rcCurrent = 1;
+        rcTrack.style.transform = `translateX(-${cardW}px)`;
+        rcTrack.offsetHeight;
+        rcTrack.style.transition = 'transform 0.55s cubic-bezier(0.4,0,0.2,1)';
+      }
+
+      if (rcCurrent === 0) {
+
+        rcTrack.style.transition = 'none';
+        rcCurrent = reviewsData.length;
+        rcTrack.style.transform = `translateX(-${cardW * reviewsData.length}px)`;
+        rcTrack.offsetHeight;
+        rcTrack.style.transition = 'transform 0.55s cubic-bezier(0.4,0,0.2,1)';
+      }
+    });
+
+    function rcStartAuto() {
+      rcTimer = setInterval(() => {
+        rcGoTo(rcCurrent + 1);
+      }, 4000);
+    }
+    function rcResetAuto()  { clearInterval(rcTimer); rcStartAuto(); }
+
+    function updatePosition(){
+      var cardW = rcTrack.children[0].offsetWidth;
+      rcTrack.style.transform = 'translateX(-' + (rcCurrent * cardW) + 'px)';
+    }
+
+    window.addEventListener('load', updatePosition);
+    window.addEventListener('resize', updatePosition);
+
+    document.getElementById('rcPrev').addEventListener('click', function() { rcGoTo(rcCurrent - 1); rcResetAuto(); });
+    document.getElementById('rcNext').addEventListener('click', function() { rcGoTo(rcCurrent + 1); rcResetAuto(); });
+
+    rcStartAuto();
+  </script>
+
+</body>
+</html>
